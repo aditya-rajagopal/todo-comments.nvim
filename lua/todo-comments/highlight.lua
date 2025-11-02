@@ -28,6 +28,7 @@ M.wins = {}
 --       continuation
 -- @TODO foobar
 -- @hack foobar
+-- TODO(aditya): Foobar
 
 ---@alias TodoDirty table<number, boolean>
 ---@type table<buffer, {dirty:TodoDirty}>
@@ -49,10 +50,10 @@ function M.match(str, patterns)
   for _, pattern in pairs(patterns) do
     local m = vim.fn.matchlist(str, [[\v\C]] .. pattern)
     if #m > 1 and m[2] then
-      local match = m[2]
-      local kw = m[3] ~= "" and m[3] or m[2]
+      local match = m[1]
+      local kw = m[2]
       local start = str:find(match, 1, true)
-      return start, start + #match, kw
+      return start, start + #match - 1, kw
     end
   end
 end
